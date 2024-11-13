@@ -7,11 +7,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private final WPI_VictorSPX motor = new WPI_VictorSPX(Constants.MotorConstants.motorPort);
+  private final WPI_VictorSPX motor = new WPI_VictorSPX(ArmConstants.motorPort);
 
   /** Creates a new Arm. */
   public ArmSubsystem() {
@@ -21,10 +21,10 @@ public class ArmSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
   }
 
   public void setSpeed(double speed) {
-    motor.set(speed * 0.1);
+    motor.set(speed * ArmConstants.speedFactor);
   }
+
 }
