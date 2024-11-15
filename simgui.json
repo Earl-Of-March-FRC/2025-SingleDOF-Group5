@@ -18,6 +18,11 @@
       "/FMSInfo": "FMSInfo"
     }
   },
+  "NetworkTables": {
+    "Transitory Values": {
+      "open": false
+    }
+  },
   "NetworkTables Info": {
     "visible": true
   }
