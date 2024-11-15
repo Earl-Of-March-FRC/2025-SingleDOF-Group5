@@ -33,7 +33,7 @@ public class ArmRotateTo extends Command {
   public void initialize() {
     controller.enableContinuousInput(0, 360);
     controller.setSetpoint(setpoint.getAsDouble());
-    controller.setTolerance(setpoint.getAsDouble());
+    controller.setTolerance(tolerance.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +41,7 @@ public class ArmRotateTo extends Command {
   public void execute() {
     armSub.setSpeed(-controller.calculate(armSub.getEncoderAngle() % 360));
     controller.setSetpoint(setpoint.getAsDouble());
-    
+
     SmartDashboard.putNumber("Arm P", controller.getP());
     SmartDashboard.putNumber("Arm I", controller.getI());
     SmartDashboard.putNumber("Arm D", controller.getD());

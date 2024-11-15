@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
@@ -14,20 +15,19 @@ import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private final WPI_VictorSPX motor = new WPI_VictorSPX(Constants.ArmConstants.motorPort);
-  private final Encoder encoder = new Encoder(Constants.EncoderConstants.channel1, Constants.EncoderConstants.channel2);
+  private final WPI_TalonSRX motor = new WPI_TalonSRX(Constants.ArmConstants.motorPort);
 
   /** Creates a new Arm. */
   public ArmSubsystem() {
+    motor.setSelectedSensorPosition(0);
     motor.setNeutralMode(NeutralMode.Brake);
-    encoder.reset();
+    motor.configFactoryDefault();
     //encoder.setDistancePerPulse(Constants.EncoderConstants.distancePerPulse);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
   }
 
   public void setSpeed(double speed) {
@@ -35,7 +35,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double getEncoderDistance() {
-    return encoder.getDistance();
+    return motor.getSelectedSensorPosition();
   }
 
   public double getEncoderAngle(){

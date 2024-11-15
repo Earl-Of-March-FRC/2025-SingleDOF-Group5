@@ -51,8 +51,8 @@ public class RobotContainer {
   private void configureBindings() {
     new Trigger(xboxController::getXButtonPressed).onTrue(
       new ArmRotateTo(armSub, 
-                      () ->90,
-                      () -> 0));
+                      () -> 90,
+                      () -> 1));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)
     //     .onTrue(new ExampleCommand(m_exampleSubsystem));
