@@ -6,10 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -39,6 +37,6 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double getEncoderAngle(){
-    return getEncoderDistance()*360/Constants.EncoderConstants.pulsesPerRev;
+    return getEncoderDistance()*360/Constants.EncoderConstants.ticksPerRev;
   }
 }
