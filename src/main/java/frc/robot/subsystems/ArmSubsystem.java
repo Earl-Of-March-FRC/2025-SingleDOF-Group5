@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.MathUtil;
@@ -28,15 +29,28 @@ public class ArmSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setSpeed(double speed) {
+  public void setSpeedPercent(double speed) {
     motor.set(MathUtil.clamp(speed, -1, 1) * 0.1);
+  }
+
+  public void setSpeedRPM(double RPM) {
+    motor.set(TalonSRXControlMode.Velocity, RPM/600*Constants.EncoderConstants.ticksPerRev);
+  }
+
+  public void rotateAngle(double angle) {
+    motor.set(TalonSRXControlMode.Position, angle/360*Constants.EncoderConstants.ticksPerRev);
   }
 
   public double getEncoderDistance() {
     return motor.getSelectedSensorPosition();
   }
 
+  public double getEncoderVelocity() {
+    return motor.getSelectedSensorVelocity();
+  }
+
   public double getEncoderAngle(){
     return getEncoderDistance()*360/Constants.EncoderConstants.ticksPerRev;
   }
+
 }

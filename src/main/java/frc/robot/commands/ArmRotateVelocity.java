@@ -6,19 +6,20 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmRotate extends Command {
+public class ArmRotateVelocity extends Command {
   ArmSubsystem armSub;
   DoubleSupplier speed;
 
-  /** Creates a new ArmRotate. */
-  public ArmRotate(ArmSubsystem armSub, DoubleSupplier speed) {
+  /** Creates a new ArmRotateAtRPM. */
+  public ArmRotateVelocity(ArmSubsystem armSub, DoubleSupplier speed) {
     this.armSub = armSub;
     this.speed = speed;
-    addRequirements(armSub);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(armSub);
   }
 
   // Called when the command is initially scheduled.
@@ -27,14 +28,18 @@ public class ArmRotate extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() { 
-    double speedDouble = speed.getAsDouble();
-    armSub.setSpeedPercent(speedDouble);
+  public void execute() {
+    armSub.setSpeedRPM(speed.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    armSub.setSpeedPercent(0);
+    
+    SmartDashboard.putNumber("Velocity PID Setpoint", speed.getAsDouble());
+    SmartDashboard.putNumber("Arm velocity", armSub.getEncoderVelocity());
+  }
 
   // Returns true when the command should end.
   @Override

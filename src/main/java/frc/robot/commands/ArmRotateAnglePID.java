@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmRotateTo extends Command {
+public class ArmRotateAnglePID extends Command {
   private ArmSubsystem armSub;
   private PIDController controller;
   private DoubleSupplier setpoint;
   private DoubleSupplier tolerance;
 
   /** Creates a new ArmRotateTo. */
-  public ArmRotateTo(ArmSubsystem armsub, DoubleSupplier setpoint, DoubleSupplier tolerance) {
+  public ArmRotateAnglePID(ArmSubsystem armsub, DoubleSupplier setpoint, DoubleSupplier tolerance) {
     this.armSub = armsub;
     this.setpoint = setpoint;
     this.tolerance = tolerance;
@@ -39,7 +39,7 @@ public class ArmRotateTo extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    armSub.setSpeed(-controller.calculate(armSub.getEncoderAngle() % 360));
+    armSub.setSpeedPercent(-controller.calculate(armSub.getEncoderAngle() % 360));
     controller.setSetpoint(setpoint.getAsDouble());
 
     SmartDashboard.putNumber("Arm P", controller.getP());
@@ -47,17 +47,19 @@ public class ArmRotateTo extends Command {
     SmartDashboard.putNumber("Arm D", controller.getD());
     SmartDashboard.putNumber("Arm PID Output", controller.calculate(armSub.getEncoderAngle() % 360));
     SmartDashboard.putNumber("Arm PID Setpoint", setpoint.getAsDouble());
+    SmartDashboard.putNumber("Arm angle", armSub.getEncoderAngle() % 360);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    armSub.setSpeed(0);
+    armSub.setSpeedPercent(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
+    //return (controller.atSetpoint() || limit.getAsBoolean());
   }
 }
