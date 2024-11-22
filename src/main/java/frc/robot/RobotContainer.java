@@ -59,13 +59,13 @@ public class RobotContainer {
     new Trigger(xboxController::getYButtonPressed).onTrue(
       new ArmRotateAngle(armSub, 
                       () -> 90));
-    new Trigger(xboxController::getAButtonPressed).onTrue(
+    new Trigger(xboxController::getAButtonPressed).whileTrue(
       new ArmRotateVelocityPID(armSub, 
-                      () -> 90,
+                      () -> 30,
                       () -> 1));
-    new Trigger(xboxController::getBButtonPressed).onTrue(
+    new Trigger(xboxController::getBButtonPressed).whileTrue(
       new ArmRotateVelocity(armSub, 
-                      () -> 90));
+                      () -> 30));
     
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)

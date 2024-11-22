@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmRotateVelocity extends Command {
@@ -30,15 +31,15 @@ public class ArmRotateVelocity extends Command {
   @Override
   public void execute() {
     armSub.setSpeedRPM(speed.getAsDouble());
+    SmartDashboard.putNumber("Velocity PID Setpoint", speed.getAsDouble());
+    SmartDashboard.putNumber("Arm velocity", armSub.getEncoderVelocity());
+    SmartDashboard.putNumber("Arm RPM", armSub.getEncoderVelocity() * 600 /  Constants.EncoderConstants.ticksPerRev);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    armSub.setSpeedPercent(0);
-    
-    SmartDashboard.putNumber("Velocity PID Setpoint", speed.getAsDouble());
-    SmartDashboard.putNumber("Arm velocity", armSub.getEncoderVelocity());
+    armSub.setSpeedRPM(0);
   }
 
   // Returns true when the command should end.

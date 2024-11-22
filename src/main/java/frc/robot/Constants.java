@@ -18,7 +18,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int motorPort = 1;
+    public static final int motorPort = 6;
     public static final double speedFactor = 0.1;
   }
 
@@ -26,6 +26,8 @@ public final class Constants {
     public static final int channel1 = 0;
     public static final int channel2 = 1;
     public static final double ticksPerRev = 1024;
+    public static double minAngle = 0;
+    public static double maxAngle = 360; 
   }
 
 }

@@ -21,7 +21,7 @@ public class ArmSubsystem extends SubsystemBase {
     motor.setSelectedSensorPosition(0);
     motor.setNeutralMode(NeutralMode.Brake);
     motor.configFactoryDefault();
-    //encoder.setDistancePerPulse(Constants.EncoderConstants.distancePerPulse);
+    // encoder.setDistancePerPulse(Constants.EncoderConstants.distancePerPulse);
   }
 
   @Override
@@ -30,15 +30,23 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setSpeedPercent(double speed) {
-    motor.set(MathUtil.clamp(speed, -1, 1) * 0.1);
+    motor.set(MathUtil.clamp(speed, -1, 1) * 0.5);
   }
 
   public void setSpeedRPM(double RPM) {
-    motor.set(TalonSRXControlMode.Velocity, RPM/600*Constants.EncoderConstants.ticksPerRev);
+    motor.set(TalonSRXControlMode.Velocity, RPM / 600 * Constants.EncoderConstants.ticksPerRev);
   }
 
-  public void rotateAngle(double angle) {
-    motor.set(TalonSRXControlMode.Position, angle/360*Constants.EncoderConstants.ticksPerRev);
+  public void rotateToAngle(double angle) {
+    motor.set(TalonSRXControlMode.Position, angle / 360 * Constants.EncoderConstants.ticksPerRev);
+  }
+
+  public void rotateByAngle(double angle) {
+    motor.set(TalonSRXControlMode.Position,
+            //clamp between the physical min and max value allowed for the arm
+            MathUtil.clamp(getEncoderAngle() + angle, Constants.EncoderConstants.minAngle, Constants.EncoderConstants.maxAngle)
+            //convert angle to ticks
+            / 360 * Constants.EncoderConstants.ticksPerRev);
   }
 
   public double getEncoderDistance() {
@@ -49,8 +57,8 @@ public class ArmSubsystem extends SubsystemBase {
     return motor.getSelectedSensorVelocity();
   }
 
-  public double getEncoderAngle(){
-    return getEncoderDistance()*360/Constants.EncoderConstants.ticksPerRev;
+  public double getEncoderAngle() {
+    return getEncoderDistance() * 360 / Constants.EncoderConstants.ticksPerRev;
   }
 
 }

@@ -33,8 +33,7 @@ public class ArmRotateAngle extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    armSub.rotateAngle(angle.getAsDouble());
-
+    armSub.rotateToAngle(angle.getAsDouble());
     SmartDashboard.putNumber("Arm PID Setpoint", angle.getAsDouble());
     SmartDashboard.putNumber("Arm angle", armSub.getEncoderAngle() % 360);
   }
@@ -47,7 +46,6 @@ public class ArmRotateAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    //return (controller.atSetpoint() || limit.getAsBoolean());
+    return armSub.getEncoderAngle() == angle.getAsDouble();
   }
 }

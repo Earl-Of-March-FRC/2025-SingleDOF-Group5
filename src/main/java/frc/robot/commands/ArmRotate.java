@@ -29,7 +29,7 @@ public class ArmRotate extends Command {
   @Override
   public void execute() { 
     double speedDouble = speed.getAsDouble();
-    armSub.setSpeedPercent(speedDouble);
+    armSub.setSpeedPercent(-speedDouble);
   }
 
   // Called once the command ends or is interrupted.

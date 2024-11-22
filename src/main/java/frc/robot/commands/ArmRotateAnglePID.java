@@ -59,7 +59,6 @@ public class ArmRotateAnglePID extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    //return (controller.atSetpoint() || limit.getAsBoolean());
+    return controller.atSetpoint();
   }
 }

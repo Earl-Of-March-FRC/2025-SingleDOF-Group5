@@ -9,6 +9,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmRotateVelocityPID extends Command {
@@ -47,6 +48,7 @@ public class ArmRotateVelocityPID extends Command {
     SmartDashboard.putNumber("Velocity PID Output", controller.calculate(armSub.getEncoderVelocity()));
     SmartDashboard.putNumber("Velocity PID Setpoint", setpoint.getAsDouble());
     SmartDashboard.putNumber("Arm velocity", armSub.getEncoderVelocity());
+    SmartDashboard.putNumber("Arm RPM", armSub.getEncoderVelocity() * 600 /  Constants.EncoderConstants.ticksPerRev);
   }
 
   // Called once the command ends or is interrupted.
