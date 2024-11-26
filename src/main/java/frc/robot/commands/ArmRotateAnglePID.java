@@ -22,7 +22,7 @@ public class ArmRotateAnglePID extends Command {
     this.armSub = armsub;
     this.setpoint = setpoint;
     this.tolerance = tolerance;
-    controller = armsub.getController();
+    controller = armsub.getPosController();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(armSub);
@@ -31,7 +31,6 @@ public class ArmRotateAnglePID extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    controller.enableContinuousInput(0, 360);
     controller.setSetpoint(setpoint.getAsDouble());
     controller.setTolerance(tolerance.getAsDouble());
   }

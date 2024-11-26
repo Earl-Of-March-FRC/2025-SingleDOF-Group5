@@ -23,7 +23,7 @@ public class ArmRotateVelocityPID extends Command {
     this.armSub = armsub;
     this.setpoint = setpoint;
     this.tolerance = tolerance;
-    controller = armsub.getController();
+    controller = armsub.getVelController();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(armSub);
