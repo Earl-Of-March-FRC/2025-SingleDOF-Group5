@@ -32,8 +32,6 @@ public class ArmRotateVelocity extends Command {
   public void execute() {
     armSub.setSpeedRPM(speed.getAsDouble());
     SmartDashboard.putNumber("Velocity PID Setpoint", speed.getAsDouble());
-    SmartDashboard.putNumber("Arm velocity", armSub.getEncoderVelocity());
-    SmartDashboard.putNumber("Arm RPM", armSub.getEncoderVelocity() * 600 /  Constants.EncoderConstants.ticksPerRev);
   }
 
   // Called once the command ends or is interrupted.

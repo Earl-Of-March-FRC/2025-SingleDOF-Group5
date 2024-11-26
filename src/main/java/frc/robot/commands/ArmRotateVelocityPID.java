@@ -23,7 +23,7 @@ public class ArmRotateVelocityPID extends Command {
     this.armSub = armsub;
     this.setpoint = setpoint;
     this.tolerance = tolerance;
-    controller = new PIDController(0, 0, 0);
+    controller = armsub.getController();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(armSub);
@@ -42,13 +42,8 @@ public class ArmRotateVelocityPID extends Command {
     armSub.setSpeedPercent(controller.calculate(armSub.getEncoderVelocity()));
     controller.setSetpoint(setpoint.getAsDouble());
 
-    SmartDashboard.putNumber("Velocity P", controller.getP());
-    SmartDashboard.putNumber("Velocity I", controller.getI());
-    SmartDashboard.putNumber("Velocity D", controller.getD());
     SmartDashboard.putNumber("Velocity PID Output", controller.calculate(armSub.getEncoderVelocity()));
     SmartDashboard.putNumber("Velocity PID Setpoint", setpoint.getAsDouble());
-    SmartDashboard.putNumber("Arm velocity", armSub.getEncoderVelocity());
-    SmartDashboard.putNumber("Arm RPM", armSub.getEncoderVelocity() * 600 /  Constants.EncoderConstants.ticksPerRev);
   }
 
   // Called once the command ends or is interrupted.

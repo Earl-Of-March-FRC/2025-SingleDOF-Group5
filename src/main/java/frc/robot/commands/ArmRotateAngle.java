@@ -35,7 +35,6 @@ public class ArmRotateAngle extends Command {
   public void execute() {
     armSub.rotateToAngle(angle.getAsDouble());
     SmartDashboard.putNumber("Arm PID Setpoint", angle.getAsDouble());
-    SmartDashboard.putNumber("Arm angle", armSub.getEncoderAngle() % 360);
   }
 
   // Called once the command ends or is interrupted.

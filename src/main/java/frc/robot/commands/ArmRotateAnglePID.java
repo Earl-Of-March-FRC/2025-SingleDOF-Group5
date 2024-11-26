@@ -22,7 +22,7 @@ public class ArmRotateAnglePID extends Command {
     this.armSub = armsub;
     this.setpoint = setpoint;
     this.tolerance = tolerance;
-    controller = new PIDController(0, 0, 0);
+    controller = armsub.getController();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(armSub);
@@ -42,12 +42,8 @@ public class ArmRotateAnglePID extends Command {
     armSub.setSpeedPercent(-controller.calculate(armSub.getEncoderAngle() % 360));
     controller.setSetpoint(setpoint.getAsDouble());
 
-    SmartDashboard.putNumber("Arm P", controller.getP());
-    SmartDashboard.putNumber("Arm I", controller.getI());
-    SmartDashboard.putNumber("Arm D", controller.getD());
     SmartDashboard.putNumber("Arm PID Output", controller.calculate(armSub.getEncoderAngle() % 360));
     SmartDashboard.putNumber("Arm PID Setpoint", setpoint.getAsDouble());
-    SmartDashboard.putNumber("Arm angle", armSub.getEncoderAngle() % 360);
   }
 
   // Called once the command ends or is interrupted.
