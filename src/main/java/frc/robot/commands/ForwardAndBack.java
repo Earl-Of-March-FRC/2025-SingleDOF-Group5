@@ -29,9 +29,9 @@ public class ForwardAndBack extends Command {
   @Override
   public void execute() {
     if (timer.get() < 3) {
-      armSub.setSpeed(-0.1);
+      armSub.setSpeed(-1);
     } else {
-      armSub.setSpeed(0.1);
+      armSub.setSpeed(1);
     }
   }
 
