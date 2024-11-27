@@ -65,7 +65,7 @@ public class ArmSubsystem extends SubsystemBase {
     posController.setI(SmartDashboard.getNumber("Arm Pos I", 0));
     posController.setD(SmartDashboard.getNumber("Arm Pos D", 0));
     
-    velController.setP(SmartDashboard.getNumber("Arm Vel  P", 0.005));
+    velController.setP(SmartDashboard.getNumber("Arm Vel P", 0.005));
     velController.setI(SmartDashboard.getNumber("Arm Vel I", 0));
     velController.setD(SmartDashboard.getNumber("Arm Vel D", 0));
 
@@ -114,7 +114,7 @@ public class ArmSubsystem extends SubsystemBase {
   
   @Override
   public void simulationPeriodic() {
-    //Simulate encoder behavior
+        //Simulate encoder behavior
         double motorOutput = motorSim.getMotorOutputLeadVoltage() / RobotController.getBatteryVoltage();
         double simulatedTicksPer100ms = motorOutput * Constants.EncoderConstants.ticksPerRev;
 

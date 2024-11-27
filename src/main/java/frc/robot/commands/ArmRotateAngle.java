@@ -45,6 +45,6 @@ public class ArmRotateAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return armSub.getEncoderAngle() == angle.getAsDouble();
+    return Math.abs(armSub.getEncoderAngle() - angle.getAsDouble()) < 5;
   }
 }

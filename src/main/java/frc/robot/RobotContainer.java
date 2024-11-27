@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -35,7 +36,7 @@ public class RobotContainer {
   public RobotContainer() {
     armSub.setDefaultCommand(
       new ArmRotate( 
-        armSub,() -> xboxController.getLeftY()
+        armSub,() -> MathUtil.applyDeadband(xboxController.getLeftY(), 0.1)
       )
     );
     // Configure the trigger bindings
@@ -55,7 +56,7 @@ public class RobotContainer {
     new Trigger(xboxController::getXButtonPressed).onTrue(
       new ArmRotateAnglePID(armSub, 
                       () -> 90,
-                      () -> 1));
+                      () -> 5));
     new Trigger(xboxController::getYButtonPressed).onTrue(
       new ArmRotateAngle(armSub, 
                       () -> 90));
