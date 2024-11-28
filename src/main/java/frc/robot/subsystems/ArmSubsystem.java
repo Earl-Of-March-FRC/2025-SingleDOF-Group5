@@ -22,7 +22,7 @@ public class ArmSubsystem extends SubsystemBase {
   private final TalonSRXSimCollection motorSim = motor.getSimCollection();
 
   private final PIDController posController = new PIDController(
-    SmartDashboard.getNumber("Arm Pos P", 0.005),
+    SmartDashboard.getNumber("Arm Pos P", 0.0000001),
     SmartDashboard.getNumber("Arm Pos I", 0), 
     SmartDashboard.getNumber("Arm Pos D", 0));
 
@@ -33,7 +33,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   /** Creates a new Arm. */
   public ArmSubsystem() {
-    SmartDashboard.putNumber("Arm Pos P", 0.005);
+    SmartDashboard.putNumber("Arm Pos P", 0.0000001);
     SmartDashboard.putNumber("Arm Pos I", 0);
     SmartDashboard.putNumber("Arm Pos D", 0);
 
@@ -61,7 +61,7 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Arm Vel I", 0);
     SmartDashboard.putNumber("Arm Vel D", 0);
   
-    posController.setP(SmartDashboard.getNumber("Arm Pos  P", 0.005));
+    posController.setP(SmartDashboard.getNumber("Arm Pos P", 0.0000001));
     posController.setI(SmartDashboard.getNumber("Arm Pos I", 0));
     posController.setD(SmartDashboard.getNumber("Arm Pos D", 0));
     
