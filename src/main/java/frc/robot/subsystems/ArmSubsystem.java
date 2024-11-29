@@ -22,24 +22,24 @@ public class ArmSubsystem extends SubsystemBase {
   private final TalonSRXSimCollection motorSim = motor.getSimCollection();
 
   private final PIDController posController = new PIDController(
-    SmartDashboard.getNumber("Arm Pos P", 0.0000001),
-    SmartDashboard.getNumber("Arm Pos I", 0), 
-    SmartDashboard.getNumber("Arm Pos D", 0));
+    SmartDashboard.getNumber("Arm Pos P", Constants.ArmConstants.poskP),
+    SmartDashboard.getNumber("Arm Pos I", Constants.ArmConstants.poskI), 
+    SmartDashboard.getNumber("Arm Pos D", Constants.ArmConstants.poskD));
 
   private final PIDController velController = new PIDController(
-    SmartDashboard.getNumber("Arm Vel P", 0.005),
-    SmartDashboard.getNumber("Arm Vel I", 0), 
-    SmartDashboard.getNumber("Arm Vel D", 0));
+    SmartDashboard.getNumber("Arm Vel P", Constants.ArmConstants.velkP),
+    SmartDashboard.getNumber("Arm Vel I", Constants.ArmConstants.velkI), 
+    SmartDashboard.getNumber("Arm Vel D", Constants.ArmConstants.velkD));
 
   /** Creates a new Arm. */
   public ArmSubsystem() {
-    SmartDashboard.putNumber("Arm Pos P", 0.0000001);
-    SmartDashboard.putNumber("Arm Pos I", 0);
-    SmartDashboard.putNumber("Arm Pos D", 0);
+    SmartDashboard.putNumber("Arm Pos P", Constants.ArmConstants.poskP);
+    SmartDashboard.putNumber("Arm Pos I", Constants.ArmConstants.poskI);
+    SmartDashboard.putNumber("Arm Pos D", Constants.ArmConstants.poskD);
 
-    SmartDashboard.putNumber("Arm Vel P", 0.005);
-    SmartDashboard.putNumber("Arm Vel I", 0);
-    SmartDashboard.putNumber("Arm Vel D", 0);
+    SmartDashboard.putNumber("Arm Vel P", Constants.ArmConstants.velkP);
+    SmartDashboard.putNumber("Arm Vel I", Constants.ArmConstants.velkI);
+    SmartDashboard.putNumber("Arm Vel D", Constants.ArmConstants.velkD);
     
 
     posController.enableContinuousInput(0, 360);
@@ -56,16 +56,13 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Arm velocity", getEncoderVelocity());
     SmartDashboard.putNumber("Arm RPM", getEncoderVelocity() * 600 /  Constants.EncoderConstants.ticksPerRev);
     SmartDashboard.putNumber("Arm angle", getEncoderAngle() % 360);
-
-    SmartDashboard.putNumber("Arm Vel P", 0.005);
-    SmartDashboard.putNumber("Arm Vel I", 0);
-    SmartDashboard.putNumber("Arm Vel D", 0);
-  
-    posController.setP(SmartDashboard.getNumber("Arm Pos P", 0.0000001));
+    
+    //this code is only for tuning
+    posController.setP(SmartDashboard.getNumber("Arm Pos P", 0.01));
     posController.setI(SmartDashboard.getNumber("Arm Pos I", 0));
     posController.setD(SmartDashboard.getNumber("Arm Pos D", 0));
     
-    velController.setP(SmartDashboard.getNumber("Arm Vel P", 0.005));
+    velController.setP(SmartDashboard.getNumber("Arm Vel P", 0.000001));
     velController.setI(SmartDashboard.getNumber("Arm Vel I", 0));
     velController.setD(SmartDashboard.getNumber("Arm Vel D", 0));
 
@@ -114,7 +111,7 @@ public class ArmSubsystem extends SubsystemBase {
   
   @Override
   public void simulationPeriodic() {
-        //Simulate encoder behavior
+        //Simulate enq  xszazcoder behavior
         double motorOutput = motorSim.getMotorOutputLeadVoltage() / RobotController.getBatteryVoltage();
         double simulatedTicksPer100ms = motorOutput * Constants.EncoderConstants.ticksPerRev;
 

@@ -20,6 +20,14 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int motorPort = 6;
     public static final double speedFactor = 0.1;
+
+    public static final double poskP = 0.01;
+    public static final double poskI = 0;
+    public static final double poskD = 0;
+
+    public static final double velkP = 0.01;
+    public static final double velkI = 0;
+    public static final double velkD = 0;
   }
 
   public static final class EncoderConstants {
