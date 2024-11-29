@@ -25,7 +25,7 @@ public final class Constants {
   public static final class EncoderConstants {
     public static final int channel1 = 0;
     public static final int channel2 = 1;
-    public static final double ticksPerRev = 1024;
+    public static final double ticksPerRev = 4096;
     public static double minAngle = 0;
     public static double maxAngle = 360; 
   }

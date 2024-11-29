@@ -56,7 +56,7 @@ public class RobotContainer {
     new Trigger(xboxController::getXButtonPressed).onTrue(
       new ArmRotateAnglePID(armSub, 
                       () -> 90,
-                      () -> 0));
+                      () -> 3));
     new Trigger(xboxController::getYButtonPressed).onTrue(
       new ArmRotateAngle(armSub, 
                       () -> 90));
