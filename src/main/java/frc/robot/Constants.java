@@ -19,7 +19,7 @@ public final class Constants {
 
   public static final class ArmConstants {
     public static final int motorPort = 6;
-    public static final double speedFactor = 0.1;
+    public static final double speedFactor = 1;
 
     public static final double poskP = 0.01;
     public static final double poskI = 0;

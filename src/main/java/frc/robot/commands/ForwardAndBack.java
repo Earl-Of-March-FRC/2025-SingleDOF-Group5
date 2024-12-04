@@ -29,16 +29,16 @@ public class ForwardAndBack extends Command {
   @Override
   public void execute() {
     if (timer.get() < 3) {
-      armSub.setSpeed(-1);
+      armSub.setSpeedPercent(-1);
     } else {
-      armSub.setSpeed(1);
+      armSub.setSpeedPercent(1);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    armSub.setSpeed(0);
+    armSub.setSpeedPercent(0);
   }
 
   // Returns true when the command should end.
