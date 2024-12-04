@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmRotate;
-import frc.robot.commands.ArmRotateAngle;
 import frc.robot.commands.ArmRotateAnglePID;
-import frc.robot.commands.ArmRotateVelocity;
-import frc.robot.commands.ArmRotateVelocityPID;
 import frc.robot.subsystems.ArmSubsystem;
 
 /**
@@ -58,15 +55,17 @@ public class RobotContainer {
                       () -> 90,
                       () -> 3));
     new Trigger(xboxController::getYButtonPressed).onTrue(
-      new ArmRotateAngle(armSub, 
-                      () -> 90));
+      new ArmRotateAnglePID(armSub, 
+                      () -> 180,
+                      () -> 3));
     new Trigger(xboxController::getAButtonPressed).whileTrue(
-      new ArmRotateVelocityPID(armSub, 
-                      () -> 30,
-                      () -> 1));
+      new ArmRotateAnglePID(armSub, 
+                      () -> 270,
+                      () -> 3));
     new Trigger(xboxController::getBButtonPressed).whileTrue(
-      new ArmRotateVelocity(armSub, 
-                      () -> 30));
+      new ArmRotateAnglePID(armSub, 
+                      () -> 0,
+                      () -> 3));
     
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)
