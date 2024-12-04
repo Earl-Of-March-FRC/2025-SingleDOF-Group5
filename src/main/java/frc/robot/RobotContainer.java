@@ -4,17 +4,17 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ArmRotate;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ForwardAndBack;
-import frc.robot.subsystems.ArmSubsystem;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ArmRotate;
+import frc.robot.commands.ArmRotateAnglePID;
+import frc.robot.subsystems.ArmSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -44,8 +44,10 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
 
     armSub.setDefaultCommand(
-        new ArmRotate(
-            armSub, () -> xboxController.getLeftY()));
+      new ArmRotate( 
+        armSub,() -> MathUtil.applyDeadband(xboxController.getLeftY(), 0.1)
+      )
+    );
     // Configure the trigger bindings
     configureBindings();
   }
@@ -65,6 +67,23 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    new Trigger(xboxController::getXButtonPressed).onTrue(
+      new ArmRotateAnglePID(armSub, 
+                      () -> 90,
+                      () -> 3));
+    new Trigger(xboxController::getYButtonPressed).onTrue(
+      new ArmRotateAnglePID(armSub, 
+                      () -> 180,
+                      () -> 3));
+    new Trigger(xboxController::getAButtonPressed).whileTrue(
+      new ArmRotateAnglePID(armSub, 
+                      () -> 270,
+                      () -> 3));
+    new Trigger(xboxController::getBButtonPressed).whileTrue(
+      new ArmRotateAnglePID(armSub, 
+                      () -> 0,
+                      () -> 3));
+    
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)
     // .onTrue(new ExampleCommand(m_exampleSubsystem));

@@ -6,6 +6,16 @@
           "open": true
         }
       },
+      "Talon SRX[6]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[6]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
       "Victor SPX[1]": {
         "header": {
           "open": true
@@ -17,6 +27,13 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {
