@@ -17,6 +17,7 @@ public class ArmRotateVelocityPID extends Command {
   private PIDController controller;
   private DoubleSupplier setpoint;
   private DoubleSupplier tolerance;
+  private double bias;
 
   /** Creates a new ArmRotateTo. */
   public ArmRotateVelocityPID(ArmSubsystem armsub, DoubleSupplier setpoint, DoubleSupplier tolerance) {
@@ -33,17 +34,20 @@ public class ArmRotateVelocityPID extends Command {
   @Override
   public void initialize() {
     controller.setSetpoint(setpoint.getAsDouble());
-    controller.setTolerance(tolerance.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    armSub.setSpeedPercent(controller.calculate(armSub.getEncoderVelocity()));
     controller.setSetpoint(setpoint.getAsDouble());
+    bias = setpoint.getAsDouble()/Constants.ArmConstants.maxRPM;
+    double PIDOutput = controller.calculate(armSub.getEncoderRPM());
 
-    SmartDashboard.putNumber("Velocity PID Output", controller.calculate(armSub.getEncoderVelocity()));
+    armSub.setVoltage(PIDOutput);
+    
+    SmartDashboard.putNumber("Velocity PID Output", PIDOutput);
     SmartDashboard.putNumber("Velocity PID Setpoint", setpoint.getAsDouble());
+    SmartDashboard.putNumber("Velocity PID Bias", bias);
   }
 
   // Called once the command ends or is interrupted.

@@ -25,9 +25,13 @@ public final class Constants {
     public static final double poskI = 0;
     public static final double poskD = 0;
 
-    public static final double velkP = 0.01;
+    public static final double velkP = 0.0001;
     public static final double velkI = 0;
     public static final double velkD = 0;
+
+    public static final double gearRatio = 7;
+    public static final double maxRPM =  4320/gearRatio; // 4320 is the max RPM of a cim motor under normal load, taken from manufacturer
+
   }
 
   public static final class EncoderConstants {

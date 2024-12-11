@@ -22,28 +22,28 @@ public class ArmSubsystem extends SubsystemBase {
   private final TalonSRXSimCollection motorSim = motor.getSimCollection();
 
   private final PIDController posController = new PIDController(
-    SmartDashboard.getNumber("Arm Pos P", Constants.ArmConstants.poskP),
-    SmartDashboard.getNumber("Arm Pos I", Constants.ArmConstants.poskI), 
-    SmartDashboard.getNumber("Arm Pos D", Constants.ArmConstants.poskD));
+      Constants.ArmConstants.poskP,
+      Constants.ArmConstants.poskI, 
+      Constants.ArmConstants.poskD);
 
   private final PIDController velController = new PIDController(
-    SmartDashboard.getNumber("Arm Vel P", Constants.ArmConstants.velkP),
-    SmartDashboard.getNumber("Arm Vel I", Constants.ArmConstants.velkI), 
-    SmartDashboard.getNumber("Arm Vel D", Constants.ArmConstants.velkD));
+     Constants.ArmConstants.velkP,
+     Constants.ArmConstants.velkI, 
+     Constants.ArmConstants.velkD);
 
   /** Creates a new Arm. */
   public ArmSubsystem() {
-    SmartDashboard.putNumber("Arm Pos P", Constants.ArmConstants.poskP);
-    SmartDashboard.putNumber("Arm Pos I", Constants.ArmConstants.poskI);
-    SmartDashboard.putNumber("Arm Pos D", Constants.ArmConstants.poskD);
+    SmartDashboard.putNumber("Arm Pos P", posController.getP());
+    SmartDashboard.putNumber("Arm Pos I", posController.getI());
+    SmartDashboard.putNumber("Arm Pos D", posController.getD());
 
-    SmartDashboard.putNumber("Arm Vel P", Constants.ArmConstants.velkP);
-    SmartDashboard.putNumber("Arm Vel I", Constants.ArmConstants.velkI);
-    SmartDashboard.putNumber("Arm Vel D", Constants.ArmConstants.velkD);
+    SmartDashboard.putNumber("Arm Vel P", velController.getP());
+    SmartDashboard.putNumber("Arm Vel I", velController.getI());
+    SmartDashboard.putNumber("Arm Vel D", velController.getD());
     
 
     posController.enableContinuousInput(0, 360);
-
+    SmartDashboard.putNumber("Arm angle", 0);
     motor.setSelectedSensorPosition(0);
     motor.setNeutralMode(NeutralMode.Brake);
     motor.configFactoryDefault();
@@ -54,18 +54,18 @@ public class ArmSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Arm velocity", getEncoderVelocity());
-    SmartDashboard.putNumber("Arm RPM", getEncoderVelocity() * 600 /  Constants.EncoderConstants.ticksPerRev);
-    SmartDashboard.putNumber("Arm angle", getEncoderAngle() % 360);
+    SmartDashboard.putNumber("Arm RPM", getEncoderRPM());
+    SmartDashboard.putNumber("Arm angle", getEncoderAngle());
     
     //this code is only for tuning
-    posController.setP(SmartDashboard.getNumber("Arm Pos P", 0.01));
-    posController.setI(SmartDashboard.getNumber("Arm Pos I", 0));
-    posController.setD(SmartDashboard.getNumber("Arm Pos D", 0));
+    posController.setP(SmartDashboard.getNumber("Arm Pos P", Constants.ArmConstants.poskP));
+    posController.setI(SmartDashboard.getNumber("Arm Pos I", Constants.ArmConstants.poskI));
+    posController.setD(SmartDashboard.getNumber("Arm Pos D", Constants.ArmConstants.poskD));
     
-    velController.setP(SmartDashboard.getNumber("Arm Vel P", 0.000001));
-    velController.setI(SmartDashboard.getNumber("Arm Vel I", 0));
-    velController.setD(SmartDashboard.getNumber("Arm Vel D", 0));
-
+    velController.setP(SmartDashboard.getNumber("Arm Vel P", Constants.ArmConstants.velkP));
+    velController.setI(SmartDashboard.getNumber("Arm Vel I", Constants.ArmConstants.velkI));
+    velController.setD(SmartDashboard.getNumber("Arm Vel D", Constants.ArmConstants.velkD));
+    
   }
 
   public void setSpeedPercent(double speed) {
@@ -74,6 +74,10 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void setSpeedRPM(double RPM) {
     motor.set(TalonSRXControlMode.Velocity, RPM / 600 * Constants.EncoderConstants.ticksPerRev);
+  }
+
+  public void setVoltage(double voltage){
+    motor.setVoltage(MathUtil.clamp(voltage, -12, 12));
   }
 
   public void rotateToAngle(double angle) {
@@ -96,8 +100,13 @@ public class ArmSubsystem extends SubsystemBase {
     return motor.getSelectedSensorVelocity();
   }
 
+  public double getEncoderRPM() {
+    return getEncoderVelocity() * 600 / Constants.EncoderConstants.ticksPerRev;
+  }
+
   public double getEncoderAngle() {
-    return getEncoderDistance() * 360 / Constants.EncoderConstants.ticksPerRev;
+    double angleWithSign = (getEncoderDistance() * 360 / Constants.EncoderConstants.ticksPerRev) % 360;
+    return angleWithSign > 0? angleWithSign:360+angleWithSign;
   }
 
   

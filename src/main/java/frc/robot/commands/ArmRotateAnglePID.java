@@ -40,7 +40,6 @@ public class ArmRotateAnglePID extends Command {
   @Override
   public void execute() {
     armSub.setSpeedPercent(-controller.calculate(armSub.getEncoderAngle() % 360));
-    controller.setSetpoint(setpoint.getAsDouble());
 
     SmartDashboard.putNumber("Arm PID Output", controller.calculate(armSub.getEncoderAngle() % 360));
     SmartDashboard.putNumber("Arm PID Setpoint", setpoint.getAsDouble());
