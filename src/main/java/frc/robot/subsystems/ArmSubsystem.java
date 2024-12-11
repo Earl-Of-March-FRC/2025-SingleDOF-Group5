@@ -69,7 +69,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setSpeedPercent(double speed) {
-    motor.set(MathUtil.clamp(speed, -1, 1));
+    motor.set(MathUtil.clamp(speed, -1, 1)*Constants.ArmConstants.speedFactor);
   }
 
   public void setSpeedRPM(double RPM) {

@@ -82,7 +82,7 @@ public class RobotContainer {
                       () -> 3));
     new Trigger(xboxController::getBButtonPressed).whileTrue(
       new ArmRotateAnglePID(armSub, 
-                      () -> 0,
+                      () -> 359,
                       () -> 3));
     
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
