@@ -34,6 +34,7 @@ public class ArmRotateAnglePID extends Command {
     controller.setSetpoint(setpoint.getAsDouble());
     controller.setTolerance(tolerance.getAsDouble());
     controller.enableContinuousInput(0, 360);
+    controller.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

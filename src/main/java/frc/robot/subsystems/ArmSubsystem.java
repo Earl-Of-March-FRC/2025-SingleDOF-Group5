@@ -40,6 +40,8 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Arm Vel P", velController.getP());
     SmartDashboard.putNumber("Arm Vel I", velController.getI());
     SmartDashboard.putNumber("Arm Vel D", velController.getD());
+
+    SmartDashboard.putNumber("Vel PID Negation", 1);
     
 
     posController.enableContinuousInput(0, 360);

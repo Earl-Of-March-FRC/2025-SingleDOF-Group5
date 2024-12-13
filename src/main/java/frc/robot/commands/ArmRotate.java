@@ -4,9 +4,11 @@
 
 package frc.robot.commands;
 
+import java.lang.invoke.ConstantBootstraps;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmRotate extends Command {
@@ -29,7 +31,7 @@ public class ArmRotate extends Command {
   @Override
   public void execute() { 
     double speedDouble = speed.getAsDouble();
-    armSub.setSpeedPercent(-speedDouble);
+    armSub.setSpeedPercent(speedDouble*Constants.ArmConstants.armSpeedMultiplier);
   }
 
   // Called once the command ends or is interrupted.

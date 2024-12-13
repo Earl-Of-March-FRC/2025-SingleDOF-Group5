@@ -34,14 +34,16 @@ public class ArmRotateVelocityPID extends Command {
   @Override
   public void initialize() {
     controller.setSetpoint(setpoint.getAsDouble());
+    controller.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     controller.setSetpoint(setpoint.getAsDouble());
-    bias = setpoint.getAsDouble()/Constants.ArmConstants.maxRPM;
-    double PIDOutput = controller.calculate(armSub.getEncoderRPM());
+    //bias = setpoint.getAsDouble()/Constants.ArmConstants.maxRPM;
+    double PIDOutput = SmartDashboard.getNumber("Vel PID Negation", 1)*controller.calculate(armSub.getEncoderRPM());
+    //NOTE: VEL PID Negation only works with positive 1.000 with current pid values
 
     armSub.setVoltage(PIDOutput);
     
